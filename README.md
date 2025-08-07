@@ -2,6 +2,14 @@
 
 A Google Cloud-based product embedding and similarity search system that uses Google's Gemini embedding models for intelligent product discovery.
 
+<img width="940" height="855" alt="스크린샷 2025-08-07 오전 9 15 58" src="https://github.com/user-attachments/assets/4a8a3bae-f774-4545-baee-ef3da6167298" />
+<img width="723" height="856" alt="스크린샷 2025-08-07 오전 9 16 37" src="https://github.com/user-attachments/assets/bc0005fe-8790-49ae-a0ec-967ef8ca01fb" />
+<img width="1106" height="875" alt="스크린샷 2025-08-07 오전 9 17 15" src="https://github.com/user-attachments/assets/ff8a24bd-cdea-40db-9796-fa7d93930f74" />
+<img width="1157" height="874" alt="스크린샷 2025-08-07 오전 9 17 33" src="https://github.com/user-attachments/assets/21373066-3a6d-465e-9acd-88d4e5985ddb" />
+<img width="1219" height="872" alt="스크린샷 2025-08-07 오전 9 18 00" src="https://github.com/user-attachments/assets/8b133f77-0718-42a8-8424-67fd3d4888e4" />
+
+
+
 ## 🎯 Overview
 
 This system implements multi-modal product search using embeddings from both text descriptions and product images. It supports two storage backends:
