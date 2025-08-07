@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1 class="display-4">Product Search System</h1>
+        <p class="lead">
+            Intelligent product similarity search powered by Google Gemini embeddings
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content-grid">
+
+        <!-- Feature Grid -->
+        <div class="card-grid">
+            <div class="card hover-shadow">
+                <div class="card-body">
+                    <div class="feature-icon text-center">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4 class="card-title">Smart Search</h4>
+                    <p class="card-text">
+                        Search products using natural language. AI understands context and finds the most similar products.
+                    </p>
+                    <a href="{{ url_for('search') }}" class="btn btn-primary">Search</a>
+                </div>
+            </div>
+            <div class="card hover-shadow">
+                <div class="card-body">
+                    <div class="feature-icon text-center">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h4 class="card-title">Add Product</h4>
+                    <p class="card-text">
+                        Register new product information. Embeddings are automatically generated for instant search capability.
+                    </p>
+                    <a href="{{ url_for('add_product') }}" class="btn btn-success">Add Product</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Search Section -->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="section-title text-center">Quick Search</h3>
+                <form action="{{ url_for('search') }}" method="POST">
+                    <div class="d-flex gap-3">
+                        <input type="text" class="form-control" 
+                               name="query_text" 
+                               placeholder="Search for products, e.g., summer t-shirt"
+                               required>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-database text-info mb-3"></i>
+                    <h6 class="card-title">Firestore</h6>
+                    <p class="text-secondary">Google Cloud Database</p>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-brain text-warning mb-3"></i>
+                    <h6 class="card-title">Gemini Embedding</h6>
+                    <p class="text-secondary">1536-dimension vectors</p>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-chart-line text-success mb-3"></i>
+                    <h6 class="card-title">Cosine Similarity</h6>
+                    <p class="text-secondary">Precise similarity calculation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

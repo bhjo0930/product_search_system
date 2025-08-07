@@ -1,0 +1,8 @@
+product_id,text_file_local_path,image_file_local_path
+P001,./products_data.csv,
+P002,./test_products/product_tshirt_blue.txt,
+P003,./test_products/product_sneakers_running.txt,
+P004,./test_products/product_jacket_winter.txt,
+P005,./test_products/product_jeans_casual.txt,
+P006,./test_products/product_backpack_travel.txt,
+P007,./test_products/product_hoodie_gray.txt

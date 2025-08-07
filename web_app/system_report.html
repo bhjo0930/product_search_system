@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 기반 상품 임베딩 및 검색 시스템 구축 보고서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #555;
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .tech-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .flow-chart {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .flow-item {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            margin: 10px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin: 0 10px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .manual-step {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .manual-step h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table th {
+            background-color: #667eea;
+            color: white;
+        }
+        
+        .table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .flow-chart {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🤖 AI 기반 상품 임베딩 및 검색 시스템</h1>
+            <p>Google Cloud Vertex AI와 Gemini 모델을 활용한 멀티모달 상품 검색 플랫폼</p>
+            <p><strong>구축일:</strong> 2025년 1월 | <strong>버전:</strong> 1.0</p>
+        </div>
+
+        <!-- 프로젝트 개요 -->
+        <div class="section">
+            <h2>📋 프로젝트 개요</h2>
+            <p>본 시스템은 Google Cloud의 최신 AI 기술을 활용하여 상품 정보를 벡터 임베딩으로 변환하고, 텍스트와 이미지를 모두 활용한 멀티모달 검색을 제공하는 웹 애플리케이션입니다.</p>
+            
+            <h3>🎯 프로젝트 목표</h3>
+            <ul>
+                <li>AI 기반 상품 임베딩 생성 및 저장</li>
+                <li>텍스트, 이미지, 멀티모달 검색 기능 구현</li>
+                <li>내부 시스템 검색과 외부 웹 검색 통합</li>
+                <li>AI 이미지 분석을 통한 자동 상품 정보 추출</li>
+                <li>직관적이고 사용자 친화적인 웹 인터페이스 제공</li>
+            </ul>
+
+            <h3>🏢 적용 분야</h3>
+            <ul>
+                <li>E-commerce 플랫폼의 상품 검색 시스템</li>
+                <li>제품 카탈로그 관리 시스템</li>
+                <li>이미지 기반 상품 추천 시스템</li>
+                <li>멀티모달 AI 검색 솔루션</li>
+            </ul>
+        </div>
+
+        <!-- 시스템 아키텍처 -->
+        <div class="section">
+            <h2>🏗️ 시스템 아키텍처</h2>
+            
+            <div class="architecture-diagram">
+                <h3>시스템 구성도</h3>
+                <div class="flow-chart">
+                    <div class="flow-item">웹 인터페이스<br>(Flask)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">AI 모델<br>(Gemini 2.5 Flash)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">벡터 DB<br>(Firestore)</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">외부 검색<br>(Google Custom Search)</div>
+                </div>
+            </div>
+
+            <h3>🔧 기술 스택</h3>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h4>🎨 Frontend</h4>
+                    <p><strong>HTML5, CSS3, JavaScript</strong><br>
+                    Bootstrap 5.3을 활용한 반응형 웹 디자인</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🔧 Backend</h4>
+                    <p><strong>Python 3.12, Flask</strong><br>
+                    RESTful API 설계 및 웹 서버 구현</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🤖 AI/ML</h4>
+                    <p><strong>Google Vertex AI</strong><br>
+                    • Gemini 2.5 Flash (이미지 분석, 검색어 생성)<br>
+                    • gemini-embedding-001 (텍스트 임베딩)<br>
+                    • multimodalembedding (이미지 임베딩)</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🗄️ Database</h4>
+                    <p><strong>Google Firestore</strong><br>
+                    벡터 임베딩 저장 및 유사도 검색</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🔍 External API</h4>
+                    <p><strong>Google Custom Search API</strong><br>
+                    웹 검색 기능 통합</p>
+                </div>
+                <div class="tech-item">
+                    <h4>☁️ Cloud Platform</h4>
+                    <p><strong>Google Cloud Platform</strong><br>
+                    Vertex AI, Firestore, Cloud Storage</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주요 특장점 -->
+        <div class="section">
+            <h2>⭐ 주요 특장점</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="icon">🧠</div>
+                    <h4>AI 멀티모달 검색</h4>
+                    <p>텍스트와 이미지를 동시에 활용한 지능형 검색</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h4>실시간 임베딩 생성</h4>
+                    <p>상품 등록 시 자동으로 벡터 임베딩 생성</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔄</div>
+                    <h4>하이브리드 검색</h4>
+                    <p>내부 시스템과 외부 웹 검색의 통합</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📱</div>
+                    <h4>반응형 디자인</h4>
+                    <p>모든 디바이스에서 최적화된 사용자 경험</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🎯</div>
+                    <h4>지능형 이미지 분석</h4>
+                    <p>AI가 이미지를 분석하여 자동으로 상품 정보 추출</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h4>고성능 벡터 검색</h4>
+                    <p>코사인 유사도를 활용한 빠르고 정확한 검색</p>
+                </div>
+            </div>
+
+            <h3>🔍 검색 기능 상세</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>검색 타입</th>
+                        <th>사용 모델</th>
+                        <th>임베딩 차원</th>
+                        <th>특징</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>텍스트 검색</td>
+                        <td>gemini-embedding-001</td>
+                        <td>1,536차원</td>
+                        <td>자연어 이해 기반 의미 검색</td>
+                    </tr>
+                    <tr>
+                        <td>이미지 검색</td>
+                        <td>multimodalembedding</td>
+                        <td>1,408차원</td>
+                        <td>시각적 특징 기반 유사 이미지 검색</td>
+                    </tr>
+                    <tr>
+                        <td>멀티모달 검색</td>
+                        <td>두 모델 조합</td>
+                        <td>가중평균 결합</td>
+                        <td>텍스트(70%) + 이미지(30%) 융합 검색</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🌐 외부 검색 시스템</h3>
+            <div class="manual-step">
+                <h4>AI 검색어 생성 프로세스</h4>
+                <p>1. 상품 정보 분석 → 2. Gemini 2.5 Flash로 검색어 생성 → 3. Google Custom Search API 호출 → 4. 결과 정리 및 표시</p>
+            </div>
+        </div>
+
+        <!-- 데이터 플로우 -->
+        <div class="section">
+            <h2>🔄 데이터 플로우</h2>
+            
+            <h3>상품 등록 프로세스</h3>
+            <div class="flow-chart">
+                <div class="flow-item">상품 정보<br>입력</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">AI 이미지<br>분석</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">임베딩<br>생성</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Firestore<br>저장</div>
+            </div>
+
+            <h3>검색 프로세스</h3>
+            <div class="flow-chart">
+                <div class="flow-item">검색 쿼리<br>입력</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">쿼리 임베딩<br>생성</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">유사도<br>계산</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">결과<br>반환</div>
+            </div>
+
+            <h3>외부 검색 프로세스</h3>
+            <div class="flow-chart">
+                <div class="flow-item">상품 정보<br>분석</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">AI 검색어<br>생성</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Google<br>검색</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">결과<br>표시</div>
+            </div>
+        </div>
+
+        <!-- 설치 및 설정 매뉴얼 -->
+        <div class="section">
+            <h2>🛠️ 설치 및 설정 매뉴얼</h2>
+            
+            <h3>1. 시스템 요구사항</h3>
+            <div class="manual-step">
+                <h4>필수 요구사항</h4>
+                <ul>
+                    <li>Python 3.12 이상</li>
+                    <li>Google Cloud Platform 계정</li>
+                    <li>Vertex AI API 활성화</li>
+                    <li>Firestore Database 생성</li>
+                    <li>Google Custom Search API 키</li>
+                </ul>
+            </div>
+
+            <h3>2. 환경 설정</h3>
+            <div class="manual-step">
+                <h4>Google Cloud 설정</h4>
+                <div class="code-block">
+# 1. Google Cloud SDK 설치
+curl https://sdk.cloud.google.com | bash
+exec -l $SHELL
+
+# 2. 프로젝트 설정
+gcloud config set project YOUR-PROJECT-ID
+gcloud auth application-default login
+
+# 3. 필요한 API 활성화
+gcloud services enable aiplatform.googleapis.com
+gcloud services enable firestore.googleapis.com
+gcloud services enable customsearch.googleapis.com</div>
+            </div>
+
+            <div class="manual-step">
+                <h4>Python 의존성 설치</h4>
+                <div class="code-block">
+# 가상환경 생성 (권장)
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# 필수 패키지 설치
+pip install flask pandas google-cloud-aiplatform
+pip install google-cloud-firestore python-dotenv vertexai
+pip install werkzeug pillow requests numpy</div>
+            </div>
+
+            <h3>3. 환경 변수 설정</h3>
+            <div class="manual-step">
+                <h4>.env 파일 생성</h4>
+                <div class="code-block">
+# Google Cloud 설정
+PROJECT_ID="your-google-cloud-project-id"
+LOCATION="asia-northeast3"
+
+# Google Custom Search API 설정
+GOOGLE_API_KEY="your-google-api-key"
+CUSTOM_SEARCH_ENGINE_ID="your-custom-search-engine-id"</div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 보안 주의사항:</strong>
+                <ul>
+                    <li>.env 파일을 Git에 커밋하지 마세요</li>
+                    <li>API 키는 안전한 곳에 보관하세요</li>
+                    <li>프로덕션 환경에서는 환경 변수로 설정하세요</li>
+                </ul>
+            </div>
+
+            <h3>4. 애플리케이션 실행</h3>
+            <div class="manual-step">
+                <h4>웹 서버 시작</h4>
+                <div class="code-block">
+# 개발 서버 실행
+cd web_app
+python app.py
+
+# 서버 접속: http://localhost:5001</div>
+            </div>
+        </div>
+
+        <!-- 사용자 매뉴얼 -->
+        <div class="section">
+            <h2>📚 사용자 매뉴얼</h2>
+            
+            <h3>1. 상품 등록</h3>
+            <div class="manual-step">
+                <h4>단계별 가이드</h4>
+                <ol>
+                    <li><strong>상품 등록 페이지 접속:</strong> 메뉴에서 "Add Product" 클릭</li>
+                    <li><strong>상품 정보 입력:</strong> 상품명, 설명, 특징 등을 상세히 입력</li>
+                    <li><strong>이미지 업로드:</strong> 상품 이미지 선택 후 "AI 분석하기" 버튼 클릭</li>
+                    <li><strong>AI 분석 결과 활용:</strong> 분석된 정보를 텍스트에 추가하거나 교체</li>
+                    <li><strong>등록 완료:</strong> "등록" 버튼을 눌러 상품 저장</li>
+                </ol>
+            </div>
+
+            <div class="success">
+                <strong>💡 팁:</strong> 상품 정보를 상세하게 입력할수록 검색 정확도가 향상됩니다.
+            </div>
+
+            <h3>2. 상품 검색</h3>
+            <div class="manual-step">
+                <h4>텍스트 검색</h4>
+                <ol>
+                    <li>"Product Search" 페이지 접속</li>
+                    <li>"Text Search" 옵션 선택</li>
+                    <li>자연어로 검색어 입력 (예: "여름용 시원한 티셔츠")</li>
+                    <li>"Search Products" 버튼 클릭</li>
+                </ol>
+            </div>
+
+            <div class="manual-step">
+                <h4>이미지 검색</h4>
+                <ol>
+                    <li>"Image Search" 옵션 선택</li>
+                    <li>유사한 상품을 찾고 싶은 이미지 업로드</li>
+                    <li>"AI 분석하기"로 이미지 내용 확인 (선택사항)</li>
+                    <li>"Search Products" 버튼 클릭</li>
+                </ol>
+            </div>
+
+            <div class="manual-step">
+                <h4>멀티모달 검색</h4>
+                <ol>
+                    <li>"Text + Image" 옵션 선택</li>
+                    <li>텍스트 설명과 이미지를 모두 입력</li>
+                    <li>자동으로 이미지 분석이 실행됨</li>
+                    <li>텍스트와 이미지 정보가 융합된 검색 결과 확인</li>
+                </ol>
+            </div>
+
+            <h3>3. 상품 상세 정보 및 관리</h3>
+            <div class="manual-step">
+                <h4>상품 상세 보기</h4>
+                <ul>
+                    <li><strong>상품 정보:</strong> 등록된 모든 상품 정보 확인</li>
+                    <li><strong>이미지 확대:</strong> 상품 이미지 클릭으로 확대 보기</li>
+                    <li><strong>기술 정보:</strong> 임베딩 차원, 등록 시간 등 확인</li>
+                </ul>
+            </div>
+
+            <div class="manual-step">
+                <h4>유사 상품 검색</h4>
+                <ul>
+                    <li><strong>내부 시스템 검색:</strong> 등록된 상품 중에서 유사 상품 찾기</li>
+                    <li><strong>외부 시스템 검색:</strong> Google 검색으로 웹에서 유사 상품 찾기</li>
+                    <li><strong>AI 검색어 생성:</strong> 상품 정보를 분석하여 자동으로 최적의 검색어 생성</li>
+                </ul>
+            </div>
+
+            <h3>4. 상품 수정 및 삭제</h3>
+            <div class="manual-step">
+                <h4>상품 수정</h4>
+                <ol>
+                    <li>상품 상세 페이지에서 "수정" 버튼 클릭</li>
+                    <li>텍스트 정보 수정 또는 새 이미지 업로드</li>
+                    <li>새 이미지 업로드 시 AI 분석 기능 활용</li>
+                    <li>"수정 완료" 버튼을 눌러 변경사항 저장</li>
+                </ol>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ 주의:</strong> 상품 수정 시 새로운 임베딩이 자동으로 생성되어 검색 결과에 즉시 반영됩니다.
+            </div>
+        </div>
+
+        <!-- 성능 및 최적화 -->
+        <div class="section">
+            <h2>⚡ 성능 및 최적화</h2>
+            
+            <h3>성능 지표</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>기능</th>
+                        <th>평균 응답시간</th>
+                        <th>최적화 방안</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>텍스트 임베딩 생성</td>
+                        <td>1-2초</td>
+                        <td>Gemini Embedding 모델 최적화</td>
+                    </tr>
+                    <tr>
+                        <td>이미지 임베딩 생성</td>
+                        <td>2-3초</td>
+                        <td>이미지 크기 자동 조정 (1024x1024)</td>
+                    </tr>
+                    <tr>
+                        <td>유사도 검색</td>
+                        <td>0.5-1초</td>
+                        <td>Firestore 인덱싱 최적화</td>
+                    </tr>
+                    <tr>
+                        <td>AI 이미지 분석</td>
+                        <td>3-5초</td>
+                        <td>Gemini 2.5 Flash 고성능 모델</td>
+                    </tr>
+                    <tr>
+                        <td>외부 검색</td>
+                        <td>2-4초</td>
+                        <td>Google Custom Search API</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>확장성 고려사항</h3>
+            <ul>
+                <li><strong>수평적 확장:</strong> 마이크로서비스 아키텍처로 전환 가능</li>
+                <li><strong>캐싱 전략:</strong> Redis를 활용한 임베딩 캐싱</li>
+                <li><strong>로드 밸런싱:</strong> 다중 인스턴스 배포 지원</li>
+                <li><strong>데이터베이스 샤딩:</strong> 대용량 데이터 처리를 위한 분산 저장</li>
+            </ul>
+        </div>
+
+        <!-- 문제 해결 가이드 -->
+        <div class="section">
+            <h2>🔧 문제 해결 가이드</h2>
+            
+            <h3>자주 발생하는 문제</h3>
+            
+            <div class="manual-step">
+                <h4>❌ Google Cloud 인증 오류</h4>
+                <p><strong>증상:</strong> "Google Cloud credentials not found" 오류</p>
+                <p><strong>해결방법:</strong></p>
+                <div class="code-block">
+# 1. Google Cloud 인증 확인
+gcloud auth application-default login
+
+# 2. 환경 변수 설정 확인
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/service-account-key.json"</div>
+            </div>
+
+            <div class="manual-step">
+                <h4>❌ Vertex AI 모델 404 오류</h4>
+                <p><strong>증상:</strong> "Publisher Model not found" 오류</p>
+                <p><strong>해결방법:</strong></p>
+                <ul>
+                    <li>프로젝트 ID와 리전 설정 확인</li>
+                    <li>Vertex AI API 활성화 확인</li>
+                    <li>모델명 정확성 확인 (gemini-2.5-flash)</li>
+                </ul>
+            </div>
+
+            <div class="manual-step">
+                <h4>❌ Firestore 연결 오류</h4>
+                <p><strong>증상:</strong> Database connection failed</p>
+                <p><strong>해결방법:</strong></p>
+                <ul>
+                    <li>Firestore 데이터베이스 생성 확인</li>
+                    <li>데이터베이스 ID 설정 확인 ('firestore')</li>
+                    <li>적절한 권한 설정 확인</li>
+                </ul>
+            </div>
+
+            <div class="manual-step">
+                <h4>⚠️ 이미지 업로드 실패</h4>
+                <p><strong>증상:</strong> 이미지 업로드 시 오류 발생</p>
+                <p><strong>해결방법:</strong></p>
+                <ul>
+                    <li>지원 형식 확인: PNG, JPG, JPEG, GIF, WebP</li>
+                    <li>파일 크기 제한: 16MB 미만</li>
+                    <li>uploads 폴더 권한 확인</li>
+                </ul>
+            </div>
+
+            <h3>로그 확인 방법</h3>
+            <div class="code-block">
+# Flask 개발 서버 로그 확인
+python app.py
+
+# Google Cloud 로그 확인
+gcloud logging read "resource.type=vertex_ai_endpoint"</div>
+        </div>
+
+        <!-- 향후 개발 계획 -->
+        <div class="section">
+            <h2>🚀 향후 개발 계획</h2>
+            
+            <h3>단기 계획 (1-3개월)</h3>
+            <ul>
+                <li>🔍 <strong>검색 성능 최적화:</strong> 인덱싱 및 캐싱 개선</li>
+                <li>📊 <strong>관리자 대시보드:</strong> 시스템 모니터링 및 통계</li>
+                <li>🔐 <strong>사용자 인증:</strong> 로그인 및 권한 관리 시스템</li>
+                <li>📱 <strong>모바일 최적화:</strong> PWA 지원 및 모바일 UX 개선</li>
+            </ul>
+
+            <h3>중기 계획 (3-6개월)</h3>
+            <ul>
+                <li>🤖 <strong>추천 시스템:</strong> 개인화된 상품 추천 알고리즘</li>
+                <li>🔄 <strong>실시간 동기화:</strong> WebSocket을 활용한 실시간 업데이트</li>
+                <li>📈 <strong>분석 기능:</strong> 검색 패턴 분석 및 인사이트</li>
+                <li>🌐 <strong>다국어 지원:</strong> 국제화(i18n) 및 다국어 검색</li>
+            </ul>
+
+            <h3>장기 계획 (6개월 이상)</h3>
+            <ul>
+                <li>☁️ <strong>클라우드 네이티브:</strong> Kubernetes 기반 마이크로서비스</li>
+                <li>🧠 <strong>고도화된 AI:</strong> 커스텀 모델 훈련 및 파인튜닝</li>
+                <li>🔗 <strong>API 에코시스템:</strong> RESTful API 및 SDK 제공</li>
+                <li>🎯 <strong>B2B 솔루션:</strong> 엔터프라이즈급 기능 확장</li>
+            </ul>
+        </div>
+
+        <!-- 연락처 및 지원 -->
+        <div class="section">
+            <h2>📞 연락처 및 지원</h2>
+            
+            <h3>기술 지원</h3>
+            <div class="manual-step">
+                <h4>개발팀 연락처</h4>
+                <ul>
+                    <li><strong>프로젝트 관리자:</strong> project-manager@company.com</li>
+                    <li><strong>기술 지원:</strong> tech-support@company.com</li>
+                    <li><strong>긴급 상황:</strong> emergency@company.com</li>
+                </ul>
+            </div>
+
+            <h3>문서 및 리소스</h3>
+            <ul>
+                <li><strong>GitHub Repository:</strong> 소스 코드 및 이슈 트래킹</li>
+                <li><strong>API 문서:</strong> 상세한 API 사용 가이드</li>
+                <li><strong>FAQ:</strong> 자주 묻는 질문과 답변</li>
+                <li><strong>커뮤니티:</strong> 사용자 커뮤니티 및 포럼</li>
+            </ul>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="footer">
+            <p>© 2025 AI 기반 상품 임베딩 및 검색 시스템. All rights reserved.</p>
+            <p>이 시스템은 Google Cloud Vertex AI와 Gemini 모델을 활용하여 구축되었습니다.</p>
+            <p><strong>문서 버전:</strong> 1.0 | <strong>최종 업데이트:</strong> 2025년 1월</p>
+        </div>
+    </div>
+</body>
+</html>

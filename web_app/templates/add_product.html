@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}Add Product - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="hero-section" style="padding: 4rem 0 2rem;">
+        <h1 class="display-4" style="font-size: 2.5rem; margin: 0;">Add Product</h1>
+        <p class="lead" style="margin: 0.5rem 0 0;">Register a new product in the catalog</p>
+    </div>
+
+    <div class="content-grid">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="content" class="form-label" style="font-weight: 400; color: #1a1a1a; margin-bottom: 0.5rem;">
+                            Product Information <span style="color: #e74c3c;">*</span>
+                        </label>
+                        <textarea class="form-control" 
+                                id="content" 
+                                name="content" 
+                                rows="10" 
+                                placeholder="Enter detailed product information...&#10;&#10;Example:&#10;Nike Dri-FIT T-Shirt&#10;&#10;Color: Navy Blue&#10;Material: 100% Polyester (Dri-FIT Technology)&#10;Sizes: S, M, L, XL&#10;Price: $45&#10;&#10;Features:&#10;- Nike's Dri-FIT technology wicks sweat away&#10;- Cool and lightweight feel for optimal performance&#10;- Classic navy blue color matches with any bottoms"
+                                required></textarea>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666666;">
+                            Include product name, color, material, price, and features.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="image" class="form-label" style="font-weight: 400; color: #1a1a1a; margin-bottom: 0.5rem;">
+                            Product Image <span style="color: #666666;">(Optional)</span>
+                        </label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(this)">
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666666;">
+                            Supported formats: JPG, PNG, GIF, WebP (Max: 16MB)
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div id="imagePreview" style="margin-top: 1rem; display: none;">
+                            <img id="previewImg" src="" alt="Image preview" style="max-width: 300px; max-height: 200px; border: 1px solid #e8e8e8; border-radius: 4px;">
+                            <div style="margin-top: 0.5rem;">
+                                <button type="button" class="btn btn-success btn-sm me-2" onclick="analyzeImage()">
+                                    <i class="fas fa-magic me-1"></i>AI 분석하기
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeImage()">Remove Image</button>
+                            </div>
+                            <!-- AI 분석 결과 표시 -->
+                            <div id="analysisResult" style="margin-top: 1rem; display: none;">
+                                <div class="alert alert-info">
+                                    <h6><i class="fas fa-brain me-2"></i>AI 분석 결과</h6>
+                                    <div id="analysisContent"></div>
+                                    <div style="margin-top: 1rem;">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="appendAnalysis()">
+                                            <i class="fas fa-plus me-1"></i>텍스트에 추가하기
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="replaceAnalysis()">
+                                            <i class="fas fa-sync me-1"></i>텍스트 교체하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('products') }}" class="btn btn-success">Back to Products</a>
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Registration Guide -->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="section-title text-center">Registration Guide</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 style="color: #1a1a1a; font-weight: 400; margin-bottom: 1rem;">Recommended Information</h6>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Product name / Brand</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Color / Design</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Material / Fabric</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Size / Dimensions</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Price information</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Key features</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Product image (optional)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 style="color: #1a1a1a; font-weight: 400; margin-bottom: 1rem;">Processing Steps</h6>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Multimodal AI embedding generation (1536 dimensions)</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Image processing and optimization</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Automatic storage in Firestore</li>
+                            <li style="margin-bottom: 0.5rem; color: #666666;">Instantly searchable by text and image</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Loading indicator on form submit
+document.querySelector('form').addEventListener('submit', function(e) {
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = 'Processing...';
+    submitBtn.disabled = true;
+});
+
+// Auto-resize textarea
+const textarea = document.getElementById('content');
+textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.max(this.scrollHeight, 300) + 'px';
+});
+
+// Image preview functionality
+function previewImage(input) {
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function removeImage() {
+    document.getElementById('image').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('previewImg').src = '';
+    document.getElementById('analysisResult').style.display = 'none';
+}
+
+// 이미지 AI 분석 기능
+let currentAnalysis = '';
+
+function analyzeImage() {
+    const fileInput = document.getElementById('image');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert('먼저 이미지를 선택해주세요.');
+        return;
+    }
+    
+    const analyzeBtn = document.querySelector('button[onclick="analyzeImage()"]');
+    const originalText = analyzeBtn.innerHTML;
+    
+    // 로딩 상태로 변경
+    analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>분석 중...';
+    analyzeBtn.disabled = true;
+    
+    // FormData 생성
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // API 호출
+    fetch('/analyze_image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            currentAnalysis = data.analysis;
+            document.getElementById('analysisContent').innerHTML = 
+                '<pre style="white-space: pre-wrap; font-family: inherit; margin: 0;">' + 
+                data.analysis + '</pre>';
+            document.getElementById('analysisResult').style.display = 'block';
+        } else {
+            alert('분석 실패: ' + (data.error || '알 수 없는 오류'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('분석 중 오류가 발생했습니다.');
+    })
+    .finally(() => {
+        // 버튼 상태 복원
+        analyzeBtn.innerHTML = originalText;
+        analyzeBtn.disabled = false;
+    });
+}
+
+function appendAnalysis() {
+    if (!currentAnalysis) return;
+    
+    const textarea = document.getElementById('content');
+    const currentText = textarea.value;
+    const separator = currentText ? '\n\n--- AI 분석 결과 ---\n' : '';
+    
+    textarea.value = currentText + separator + currentAnalysis;
+    
+    // 텍스트 영역 크기 자동 조정
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.max(textarea.scrollHeight, 300) + 'px';
+    
+    alert('AI 분석 결과가 텍스트에 추가되었습니다.');
+}
+
+function replaceAnalysis() {
+    if (!currentAnalysis) return;
+    
+    if (confirm('기존 텍스트를 AI 분석 결과로 교체하시겠습니까?')) {
+        const textarea = document.getElementById('content');
+        textarea.value = currentAnalysis;
+        
+        // 텍스트 영역 크기 자동 조정
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.max(textarea.scrollHeight, 300) + 'px';
+        
+        alert('텍스트가 AI 분석 결과로 교체되었습니다.');
+    }
+}
+</script>
+{% endblock %}

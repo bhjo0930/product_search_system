@@ -1,0 +1,11 @@
+# Example URLs for batch processing
+# One URL per line, lines starting with # are ignored
+
+# E-commerce examples
+https://example-shop.com/products/sneakers-123
+https://example-shop.com/products/jacket-456
+https://example-shop.com/products/backpack-789
+
+# Additional examples (uncomment to use)
+# https://another-site.com/item/product-001
+# https://marketplace.com/listing/item-xyz

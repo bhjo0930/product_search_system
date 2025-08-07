@@ -1,0 +1,475 @@
+/* Mark Wheeler Style - Minimalist & Modern */
+
+/* 전체 레이아웃 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+
+main {
+    flex: 1;
+    padding: 0;
+}
+
+/* Grid & Cards - Mark Wheeler Modular Approach */
+.hover-shadow {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e8e8e8;
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #d0d0d0;
+}
+
+/* 네비게이션 - Minimal Header */
+.navbar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e8e8e8;
+    box-shadow: none;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #1a1a1a !important;
+    letter-spacing: -0.02em;
+}
+
+.nav-link {
+    font-weight: 400;
+    color: #666666 !important;
+    transition: color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover {
+    color: #1a1a1a !important;
+}
+
+/* 메인 페이지 - Minimal Typography */
+.display-4 {
+    font-weight: 300;
+    color: #1a1a1a;
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+}
+
+.lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #666666;
+    font-weight: 300;
+}
+
+.feature-icon {
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.feature-icon i {
+    transition: opacity 0.2s ease;
+    font-size: 2rem;
+}
+
+.card:hover .feature-icon i {
+    opacity: 1;
+}
+
+/* 검색 결과 스타일 */
+.product-content {
+    line-height: 1.6;
+}
+
+.content-preview {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.content-preview::-webkit-scrollbar {
+    width: 4px;
+}
+
+.content-preview::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.content-preview::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+.content-preview::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 상품 목록 스타일 */
+.border-bottom:last-child {
+    border-bottom: none !important;
+}
+
+/* 상품 상세 페이지 */
+.product-content h4 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.product-content h5 {
+    color: #28a745;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-content h6 {
+    color: #17a2b8;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-content ul {
+    margin-left: 1rem;
+}
+
+.product-content li {
+    margin-bottom: 0.25rem;
+}
+
+/* 폼 - Clean & Minimal */
+.form-control {
+    border-radius: 0;
+    border: 1px solid #e8e8e8;
+    transition: border-color 0.2s ease;
+    font-size: 0.95rem;
+    padding: 0.75rem;
+    background: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #1a1a1a;
+    box-shadow: none;
+    outline: none;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* 버튼 - Minimal Design */
+.btn {
+    border-radius: 0;
+    font-weight: 400;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1.5rem;
+}
+
+.btn:hover {
+    transform: none;
+}
+
+.btn-primary {
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+.btn-success {
+    background: transparent;
+    border: 1px solid #1a1a1a;
+    color: #1a1a1a;
+}
+
+.btn-success:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.btn-danger {
+    background: transparent;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+/* 배지 - Minimal Indicators */
+.badge {
+    font-weight: 400;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 로딩 스피너 */
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+
+/* 알림 - Subtle Notifications */
+.alert {
+    border-radius: 0;
+    border: 1px solid transparent;
+    border-left: 4px solid;
+    background: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: #f8f9fa;
+    color: #1a1a1a;
+    border-left-color: #27ae60;
+}
+
+.alert-danger {
+    background: #f8f9fa;
+    color: #1a1a1a;
+    border-left-color: #e74c3c;
+}
+
+.alert-warning {
+    background: #f8f9fa;
+    color: #1a1a1a;
+    border-left-color: #f39c12;
+}
+
+/* 모달 - Clean Dialog */
+.modal-content {
+    border-radius: 0;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-radius: 0;
+    border-bottom: 1px solid #e8e8e8;
+    background: #ffffff;
+}
+
+/* 푸터 스타일 */
+footer {
+    border-top: 1px solid #dee2e6;
+    margin-top: auto;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .btn-group-vertical {
+        width: 100%;
+    }
+    
+    .btn-group-vertical .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .modal-dialog {
+        margin: 1rem;
+    }
+    
+    .card-body .row {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* 커스텀 애니메이션 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease;
+}
+
+/* 검색 결과 - Subtle Indicators */
+.similarity-high {
+    border-left: 4px solid #27ae60;
+    background: rgba(39, 174, 96, 0.02);
+}
+
+.similarity-medium {
+    border-left: 4px solid #f39c12;
+    background: rgba(243, 156, 18, 0.02);
+}
+
+.similarity-low {
+    border-left: 4px solid #e74c3c;
+    background: rgba(231, 76, 60, 0.02);
+}
+
+/* 아이콘 - Muted Colors */
+.text-primary { color: #1a1a1a !important; }
+.text-success { color: #27ae60 !important; }
+.text-danger { color: #e74c3c !important; }
+.text-warning { color: #f39c12 !important; }
+.text-info { color: #666666 !important; }
+.text-secondary { color: #999999 !important; }
+
+/* 호버 효과 */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Mark Wheeler Grid System */
+.container {
+    max-width: 1200px;
+    padding: 0 2rem;
+}
+
+.content-grid {
+    display: grid;
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 6rem 0 4rem;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #1a1a1a;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+}
+
+/* Card Grid Layout */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.card {
+    border: 1px solid #e8e8e8;
+    border-radius: 0;
+    background: #ffffff;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: none;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+}
+
+.card-text {
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Minimal Spacing */
+.mb-4 {
+    margin-bottom: 3rem !important;
+}
+
+.mt-4 {
+    margin-top: 3rem !important;
+}
+
+.py-5 {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+}
+
+/* Mark Wheeler Typography Scale */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1.1rem; }

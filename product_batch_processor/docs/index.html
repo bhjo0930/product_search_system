@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Batch Processor - 상품 검색 시스템 배치 프로그램</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .process-flow {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .cta-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .flow-container {
+                flex-direction: column;
+            }
+            
+            .flow-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+                position: absolute;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>🚀 Product Batch Processor</h1>
+            <p class="subtitle">AI 기반 상품 정보 추출 및 클라우드 저장 시스템</p>
+            <div class="badges">
+                <span class="badge">Python 3.12+</span>
+                <span class="badge">Google Cloud</span>
+                <span class="badge">AI/ML</span>
+                <span class="badge">벡터 검색</span>
+                <span class="badge">배치 처리</span>
+            </div>
+        </div>
+
+        <!-- Process Flow -->
+        <div class="process-flow">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #4a5568;">
+                <span class="icon">⚡</span> 처리 흐름
+            </h2>
+            <div class="flow-container">
+                <div class="flow-step">웹 크롤링</div>
+                <div class="flow-step">정보 추출</div>
+                <div class="flow-step">이미지 처리</div>
+                <div class="flow-step">클라우드 저장</div>
+                <div class="flow-step">임베딩 생성</div>
+                <div class="flow-step">완료</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-content">
+            <!-- Overview -->
+            <div class="card">
+                <h2><span class="icon">📋</span>시스템 개요</h2>
+                <p>웹사이트에서 상품 정보를 자동으로 추출하고 AI 임베딩을 생성하여 클라우드에 저장하는 <span class="highlight">완전 자동화된 배치 시스템</span>입니다.</p>
+                <br>
+                <ul>
+                    <li>URL 입력만으로 완전 자동 처리</li>
+                    <li>Gemini AI를 활용한 정확한 정보 추출</li>
+                    <li>Google Cloud 완전 통합</li>
+                    <li>기존 검색 시스템과 100% 호환</li>
+                </ul>
+            </div>
+
+            <!-- Architecture -->
+            <div class="card">
+                <h2><span class="icon">🏗️</span>시스템 아키텍처</h2>
+                <p><span class="highlight">모듈화된 설계</span>로 각 단계가 독립적으로 작동하며, 실패 시 자동 재시도 및 복구 기능을 제공합니다.</p>
+                <br>
+                <ul>
+                    <li>비동기 처리로 높은 성능</li>
+                    <li>지수 백오프 재시도 로직</li>
+                    <li>구조화된 JSON 로깅</li>
+                    <li>설정 기반 동작 제어</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3><span class="icon">🌐</span>웹 크롤링</h3>
+                <ul>
+                    <li>HTML 콘텐츠 자동 추출</li>
+                    <li>속도 제한 및 재시도 로직</li>
+                    <li>다양한 웹사이트 지원</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><span class="icon">🤖</span>AI 정보 추출</h3>
+                <ul>
+                    <li>Gemini 2.5 Flash 모델 사용</li>
+                    <li>상품명, 설명, 가격 등 자동 추출</li>
+                    <li>구조화된 JSON 출력</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><span class="icon">🖼️</span>이미지 처리</h3>
+                <ul>
+                    <li>상품 이미지 자동 다운로드</li>
+                    <li>크기 최적화 및 형식 변환</li>
+                    <li>GCS 업로드 및 공개 URL 생성</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><span class="icon">☁️</span>클라우드 통합</h3>
+                <ul>
+                    <li>Firestore 데이터베이스 저장</li>
+                    <li>Google Cloud Storage 통합</li>
+                    <li>완전한 백업 및 복구</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><span class="icon">🔍</span>벡터 임베딩</h3>
+                <ul>
+                    <li>텍스트 임베딩 (1536차원)</li>
+                    <li>이미지 임베딩 (1408차원)</li>
+                    <li>벡터 검색 지원</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3><span class="icon">⚡</span>배치 처리</h3>
+                <ul>
+                    <li>대량 URL 병렬 처리</li>
+                    <li>설정 가능한 워커 수</li>
+                    <li>진행률 모니터링</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">~30초</div>
+                <p>단일 URL 처리 시간</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <p>기존 시스템 호환성</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">85%+</div>
+                <p>처리 성공률</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1536D</div>
+                <p>텍스트 임베딩 차원</p>
+            </div>
+        </div>
+
+        <!-- Usage Examples -->
+        <div class="card">
+            <h2><span class="icon">💻</span>사용법</h2>
+            
+            <h3>📝 환경 설정</h3>
+            <div class="code-block"># .env 파일 설정
+PROJECT_ID="your-google-cloud-project"
+LOCATION="asia-northeast3"
+GCS_BUCKET="your-storage-bucket"
+FIRESTORE_COLLECTION="products"
+LOG_LEVEL=INFO</div>
+
+            <h3>🚀 단일 URL 처리</h3>
+            <div class="code-block">python main.py --url "https://example.com/product/123" --mode single</div>
+
+            <h3>📦 배치 처리</h3>
+            <div class="code-block"># urls.txt 파일에 URL 목록 작성 후
+python main.py --file urls.txt --mode batch --workers 3</div>
+
+            <h3>⚙️ 고급 옵션</h3>
+            <div class="code-block"># 사용자 정의 상품 ID 및 로그 레벨
+python main.py --url "https://example.com/product/123" \
+    --product-id "CUSTOM001" \
+    --log-level DEBUG</div>
+        </div>
+
+        <!-- Compatibility -->
+        <div class="card">
+            <h2><span class="icon">🔄</span>기존 시스템 호환성</h2>
+            <p>기존 <span class="highlight">embedding_firestore.py</span> 시스템과 완전 호환됩니다.</p>
+            
+            <h3>✅ 임베딩 모델 호환성</h3>
+            <ul>
+                <li>텍스트: <code>gemini-embedding-001</code> (1536차원)</li>
+                <li>이미지: <code>multimodalembedding</code> (1408차원)</li>
+            </ul>
+
+            <h3>✅ 데이터 구조 호환성</h3>
+            <div class="code-block">{
+  "product_id": "P12345678",
+  "text_content": "상품명: 티셔츠\\n설명: 파란색 반팔...",
+  "image_path": "https://storage.googleapis.com/.../image.jpg",
+  "text_embedding": [1536차원 벡터],
+  "image_embedding": [1408차원 벡터],
+  "created_at": "2025-08-04T12:00:00Z"
+}</div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">🚀 지금 시작하세요!</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">
+                몇 분 만에 설정하고 상품 정보 추출을 자동화하세요.
+            </p>
+            <a href="#" class="cta-button">📋 설치 가이드</a>
+            <a href="#" class="cta-button">📖 API 문서</a>
+            <a href="#" class="cta-button">🧪 테스트 리포트</a>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 40px; color: rgba(255,255,255,0.8);">
+            <p>&copy; 2025 Product Batch Processor. Built with ❤️ using Python & Google Cloud.</p>
+        </div>
+    </div>
+</body>
+</html>
